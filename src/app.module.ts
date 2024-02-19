@@ -5,24 +5,22 @@ import { UserModule } from './user/user.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { dirname } from 'path';
 import databaseConfig from './config/database.config'
+import { IsUniqueConstraint } from './shared/validation/is-unique';
 
 @Module({
     imports: [
         ConfigModule.forRoot({
-            envFilePath: `.${process.env.NODE_ENV}.env`,
+            envFilePath: `.development.env`, //TODO
             isGlobal: true,
             load: [databaseConfig]
         }),
         TypeOrmModule.forRoot(databaseConfig()),
         AuthModule,
-        UserModule
+        UserModule,
+
     ],
-    controllers: [],
-    providers: [],
+    providers : [IsUniqueConstraint]
 })
 
 export class AppModule {
-   constructor(private configService: ConfigService) {
-    // console.log(this.configService.get('database'));
-   }
 }

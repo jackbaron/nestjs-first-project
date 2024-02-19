@@ -11,7 +11,7 @@ export default registerAs(
         password: process.env.DB_PASSWORD,
         database: process.env.DB_NAME,
         autoLoadEntities: true,
-        synchronize: true,
+        synchronize: process.env.DB_SYNCHRONIZE === "true", // Setting synchronize: true shouldn't be used in production - otherwise you can lose production data. 
         entities: [
             __dirname + '/../**/*.entity{.ts,.js}',
         ]
